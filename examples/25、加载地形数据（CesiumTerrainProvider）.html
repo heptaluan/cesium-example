@@ -38,21 +38,15 @@
     // 隐藏 logo
     viewer._cesiumWidget._creditContainer.style.display = 'none'
 
-    var dataSource = Cesium.GeoJsonDataSource.load('./data/ne_10m_us_states.topojson', {
-      stroke: Cesium.Color.HOTPINK,
-      fill: Cesium.Color.PINK.withAlpha(0.5),
-      strokeWidth: 3,
+    var terrainProvider = new Cesium.CesiumTerrainProvider({
+      url: Cesium.IonResource.fromAssetId(3956),
+      requestWaterMask: true, // 请求水体效果所需要的海岸线数据
+      requestVertexNormals: true, // 请求地形照明数据
     })
 
-    viewer.dataSources.add(dataSource)
-    viewer.flyTo(dataSource)
+    viewer.terrainProvider = terrainProvider
 
-    var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
-
-    handler.setInputAction(function (movement) {
-      var feature = viewer.scene.pick(movement.position)
-      if (Cesium.defined(feature)) {
-      }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    // viewer.scene.globe.depthTestAgainstTerrain = true  // 启用深度测试，让地形后面的东西消失
+    // viewer.scene.globe.enableLighting = true           // 对大气和雾启用动态照明效果
   </script>
 </body>

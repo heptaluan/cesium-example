@@ -38,14 +38,7 @@
     // 隐藏 logo
     viewer._cesiumWidget._creditContainer.style.display = 'none'
 
-    var dataSource = Cesium.GeoJsonDataSource.load('./data/ne_10m_us_states.topojson', {
-      stroke: Cesium.Color.HOTPINK,
-      fill: Cesium.Color.PINK.withAlpha(0.5),
-      strokeWidth: 3,
-    })
-
-    viewer.dataSources.add(dataSource)
-    viewer.flyTo(dataSource)
+    var dataSource = Cesium.GeoJsonDataSource.load('./data/simplestyles.geojson')
 
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
 
@@ -54,5 +47,6 @@
       if (Cesium.defined(feature)) {
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    
   </script>
 </body>
