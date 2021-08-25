@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+  <title>Hello World</title>
+  <script src="../../Build/Cesium/Cesium.js"></script>
+  <link href="../../Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* 不占据空间，无法点击 */
+    .cesium-viewer-toolbar,               /* 右上角按钮组 */
+    .cesium-viewer-animationContainer,    /* 左下角动画控件 */
+    .cesium-viewer-timelineContainer,     /* 时间线 */
+    .cesium-viewer-bottom {
+      /* logo信息 */
+      display: none;
+    }
+
+    .cesium-viewer-fullscreenContainer {
+      /* 全屏按钮 */
+      position: absolute;
+      top: -999em;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    var viewer = new Cesium.Viewer('cesiumContainer')
+
+    // 隐藏logo
+    viewer._cesiumWidget._creditContainer.style.display = 'none'
+
+    var entity = viewer.entities.add({
+      id: '',
+      name: 'billboard',
+      show: true,
+      description: '',
+      orientation: '',
+      position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+      billboard: {
+        show: true,
+        image: '../images/Cesium_Logo_overlay.png',
+        scale: 2.0,
+        pixelOffset: new Cesium.Cartesian2(0, -50),
+        eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        color: Cesium.Color.LIME,
+        rotation: Cesium.Math.PI_OVER_FOUR,
+        alignedAxis: Cesium.Cartesian3.ZERO,
+        width: 100,
+        height: 25,
+        scaleByDistance: new Cesium.NearFarScalar(1.0e3, 2.0, 2.0e3, 1.0),
+        translucencyByDistance: new Cesium.NearFarScalar(1.0e3, 1.0, 1.5e6, 0.5),
+        pixelOffsetScaleByDistance: new Cesium.NearFarScalar(1.0e3, 1.0, 1.5e6, 0.0),
+        disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      },
+    })
+
+    viewer.flyTo(entity)
+
+    var billboard = entity.billboard
+    billboard.scale = 3.0
+    billboard.color = Cesium.Color.WHITE.withAlpha(0.25)
+
+  </script>
+</body>

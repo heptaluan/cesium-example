@@ -38,20 +38,23 @@
     // 隐藏logo
     viewer._cesiumWidget._creditContainer.style.display = 'none'
 
-    // Satellites
-    // var dataSource = Cesium.CzmlDataSource.load('./data/simple.czml')
-
-    // Vehicle
-    var dataSource = Cesium.CzmlDataSource.load('../data/Vehicle.czml')
-
-    viewer.scene.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(-116.52, 35.02, 95000),
-      orientation: {
-        heading: 6,
+    var entity = viewer.entities.add({
+      name: 'box',
+      position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 3000.0),
+      box: {
+        show: true,
+        dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 5000.0),
+        heightReference: Cesium.HeightReference.NONE,
+        fill: true,
+        material: Cesium.Color.RED.withAlpha(0.5),
+        outline: true,
+        outlineColor: Cesium.Color.BLACK,
+        outlineWidth: 1.0,
+        shadows: Cesium.ShadowMode.DISABLED,
       },
     })
 
-    viewer.dataSources.add(dataSource)
+    viewer.zoomTo(entity)
 
   </script>
 </body>
