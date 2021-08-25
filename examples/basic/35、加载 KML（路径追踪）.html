@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+  <title>Hello World</title>
+  <script src="../../Build/Cesium/Cesium.js"></script>
+  <link href="../../Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* 不占据空间，无法点击 */
+    .cesium-viewer-toolbar,               /* 右上角按钮组 */
+    .cesium-viewer-animationContainer,    /* 左下角动画控件 */
+    .cesium-viewer-timelineContainer,     /* 时间线 */
+    .cesium-viewer-bottom {
+      /* logo信息 */
+      display: none;
+    }
+
+    .cesium-viewer-fullscreenContainer {
+      /* 全屏按钮 */
+      position: absolute;
+      top: -999em;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    var viewer = new Cesium.Viewer('cesiumContainer')
+
+    // 隐藏logo
+    viewer._cesiumWidget._creditContainer.style.display = 'none'
+
+    var options = {
+      camera: viewer.scene.camera,
+      canvas: viewer.scene.canvas,
+    }
+
+    var dataSource = Cesium.KmlDataSource.load('../data/kml/bikeRide.kml', options)
+
+    viewer.dataSources.add(dataSource).then(function (dataSource) {
+      viewer.clock.shouldAnimate = false
+      var rider = dataSource.entities.getById('tour')
+      viewer.flyTo(rider).then(function () {
+        viewer.trackedEntity = rider
+        viewer.selectedEntity = viewer.trackedEntity
+        viewer.clock.multiplier = 30
+        viewer.clock.shouldAnimate = true
+      })
+    })
+    
+  </script>
+</body>

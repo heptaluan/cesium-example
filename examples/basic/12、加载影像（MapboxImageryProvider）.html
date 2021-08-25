@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+  <title>Hello World</title>
+  <script src="../../Build/Cesium/Cesium.js"></script>
+  <link href="../../Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* 不占据空间，无法点击 */
+    .cesium-viewer-toolbar,               /* 右上角按钮组 */
+    .cesium-viewer-animationContainer,    /* 左下角动画控件 */
+    .cesium-viewer-timelineContainer,     /* 时间线 */
+    .cesium-viewer-bottom {
+      /* logo信息 */
+      display: none;
+    }
+
+    .cesium-viewer-fullscreenContainer {
+      /* 全屏按钮 */
+      position: absolute;
+      top: -999em;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    var viewer = new Cesium.Viewer('cesiumContainer')
+
+    // 隐藏 logo
+    viewer._cesiumWidget._creditContainer.style.display = 'none'
+
+    var imageryLayers = viewer.imageryLayers
+    imageryLayers.remove(imageryLayers.get(0))
+
+    // MapboxImageryProvider 用于 Mapbox 影像服务，根据 mapId 来指定地图风格
+    var mapIds = [
+      'mapbox.satellite',
+      'mapbox.streets',
+      'mapbox.streets-basic',
+      'mapbox.light',
+      'mapbox.streets-satellite',
+      'mapbox.wheatpaste',
+      'mapbox.comic',
+      'mapbox.outdoors',
+      'mapbox.run-bike-hike',
+      'mapbox.pencil',
+      'mapbox.pirates',
+      'mapbox.emerald',
+      'mapbox.high-contrast',
+    ]
+
+    imageryLayers.addImageryProvider(
+      new Cesium.MapboxImageryProvider({
+        mapId: mapIds[0],
+        accessToken: 'pk.eyJ1IjoibHM4NzAwNjEwMTEiLCJhIjoiY2tqYXZlZ2JrMDI5bTJzcDJmdDNteGhsNyJ9.0wTn4B1ce9Q4U5GnPso5iA',
+      })
+    )
+
+  </script>
+</body>
